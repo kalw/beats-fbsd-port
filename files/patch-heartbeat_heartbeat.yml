@@ -1,6 +1,6 @@
 Add Paths section for reference.
 
---- heartbeat/heartbeat.yml.orig	2019-10-15 21:08:29 UTC
+--- heartbeat/heartbeat.yml.orig	2020-02-28 18:43:02 UTC
 +++ heartbeat/heartbeat.yml
 @@ -55,6 +55,33 @@ setup.template.settings:
  #  env: staging
@@ -33,15 +33,15 @@ Add Paths section for reference.
 +#path.logs: ${path.home}/logs
 +
 +
- #============================== Dashboards =====================================
- # These settings control loading the sample dashboards to the Kibana index. Loading
- # the dashboards is disabled by default and can be enabled either by setting the
-@@ -147,6 +174,8 @@ processors:
+ #============================== Kibana =====================================
+ 
+ # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
+@@ -139,6 +166,8 @@ processors:
  # To enable all selectors use ["*"]. Examples of other selectors are "beat",
  # "publish", "service".
  #logging.selectors: ["*"]
 +logging.to_syslog: true
 +logging.to_files: false
  
- #============================== Xpack Monitoring ===============================
+ #============================== X-Pack Monitoring ===============================
  # heartbeat can export internal metrics to a central Elasticsearch monitoring

@@ -1,4 +1,4 @@
---- packetbeat/packetbeat.yml.orig	2019-10-15 21:08:29 UTC
+--- packetbeat/packetbeat.yml.orig	2020-02-28 18:43:02 UTC
 +++ packetbeat/packetbeat.yml
 @@ -10,8 +10,10 @@
  #============================== Network device ================================
@@ -20,5 +20,5 @@
 +logging.to_syslog: true
 +logging.to_files: false
  
- #============================== Xpack Monitoring ===============================
+ #============================== X-Pack Monitoring ===============================
  # packetbeat can export internal metrics to a central Elasticsearch monitoring

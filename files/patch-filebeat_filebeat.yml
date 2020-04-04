@@ -1,6 +1,6 @@
 Add Paths section for reference.
 
---- filebeat/filebeat.yml.orig	2019-10-15 21:08:29 UTC
+--- filebeat/filebeat.yml.orig	2020-02-28 18:43:02 UTC
 +++ filebeat/filebeat.yml
 @@ -98,6 +98,33 @@ setup.template.settings:
  #  env: staging
@@ -36,12 +36,12 @@ Add Paths section for reference.
  #============================== Dashboards =====================================
  # These settings control loading the sample dashboards to the Kibana index. Loading
  # the dashboards is disabled by default and can be enabled either by setting the
-@@ -190,6 +217,8 @@ processors:
+@@ -192,6 +219,8 @@ processors:
  # To enable all selectors use ["*"]. Examples of other selectors are "beat",
  # "publish", "service".
  #logging.selectors: ["*"]
 +logging.to_syslog: true
 +logging.to_files: false
  
- #============================== Xpack Monitoring ===============================
+ #============================== X-Pack Monitoring ===============================
  # filebeat can export internal metrics to a central Elasticsearch monitoring

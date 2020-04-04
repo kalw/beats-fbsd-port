@@ -2,4 +2,5 @@ freebsd_instance:
   image_family: freebsd-11-3-snap
 
 task:
-  script: make 
+  install_script: pkg install -y git gmake go bash
+  script: sudo make -DALLOW_UNSUPPORTED_SYSTEM -DBATCH
