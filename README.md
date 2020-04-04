@@ -10,5 +10,5 @@ $ sudo portsnap fetch extract
 $ fetch https://github.com/kalw/beats-fbsd-port/archive/master.zip
 $ unzip master.zip 
 $ cd beats-fbsd-port*
-$ sudo DALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
+$ sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
 ```
