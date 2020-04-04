@@ -2,7 +2,7 @@ freebsd_instance:
   image_family: freebsd-11-3-snap
 
 task:
-  install_script: pkg install -y git gmake go bash
+  install_script: pkg install -y gmake go bash
   script: sudo DALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
   binaries_artifacts:
     path: "work/pkg/"
