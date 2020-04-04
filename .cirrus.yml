@@ -1,0 +1,5 @@
+freebsd_instance:
+  image_family: freebsd-11-3-snap
+
+task:
+  script: make 
