@@ -3,4 +3,6 @@ freebsd_instance:
 
 task:
   install_script: pkg install -y git gmake go bash
-  script: sudo make -DALLOW_UNSUPPORTED_SYSTEM -DBATCH
+  script: sudo DALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
+  binaries_artifacts:
+    path: "work/pkg/"
