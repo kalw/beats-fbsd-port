@@ -45,10 +45,19 @@ task:
     sudo bash -c 'chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}'
     sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -U'
     sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -M'
-  script: |
-    sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf'
-    sudo bash -c 'echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf'
-    poudriere jail -c -j 112amd64 -v 11.2-RELEASE -a amd64
-    poudriere bulk -j 112amd64 -p default sysutils/beats7
-  binaries_artifacts:
-    path: "/usr/local/poudriere/data/packages/112amd64-default/All/*"
+  matrix:
+    - script: |
+        sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf'
+        sudo bash -c 'echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf'
+        sudo poudriere jail -c -j 112amd64 -v 11.2-RELEASE -a amd64
+        sudo poudriere bulk -j 112amd64 -p default sysutils/beats7
+      binaries_artifacts:
+        path: "/usr/local/poudriere/data/packages/112amd64-default/All/*"
+    - script: |
+        sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/113amd64-make.conf'
+        sudo poudriere jail -c -j 113amd64 -v 11.3-STABLE -a amd64
+        sudo poudriere bulk -j 113amd64 -p default sysutils/beats7
+      binaries_artifacts:
+        path: "/usr/local/poudriere/data/packages/113amd64-default/All/*"
+
+  
