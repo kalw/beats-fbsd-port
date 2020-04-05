@@ -73,8 +73,6 @@
 %%ETCDIR%%/metricbeat.modules.d/vsphere.yml.disabled
 %%ETCDIR%%/metricbeat.modules.d/windows.yml.disabled
 %%ETCDIR%%/metricbeat.modules.d/zookeeper.yml.disabled
-%%DATADIR%%/auditbeat/module/file_integrity/monitor
-%%DATADIR%%/auditbeat/module/file_integrity/schema
 %%DATADIR%%/filebeat/module/apache/_meta/config.reference.yml
 %%DATADIR%%/filebeat/module/apache/_meta/config.yml
 %%DATADIR%%/filebeat/module/apache/_meta/docs.asciidoc
@@ -1073,9 +1071,7 @@
 %%DATADIR%%/auditbeat/module/file_integrity/_meta/fields.yml
 %%DATADIR%%/auditbeat/module/file_integrity/_meta/kibana/7/dashboard/auditbeat-file-integrity.json
 %%DATADIR%%/auditbeat/module/file_integrity/module.yml
-%%DATADIR%%@dir /auditbeat/module/file_integrity/monitor
 %%DATADIR%%/auditbeat/module/file_integrity/schema.fbs
-%%DATADIR%%@dir /auditbeat/module/file_integrity/schema
 %%FILEBEAT%%@dir /var/db/beats/filebeat/kibana
 %%FILEBEAT%%@dir /var/db/beats/filebeat/kibana/7
 %%FILEBEAT%%@dir /var/db/beats/filebeat/kibana/7/dashboard
@@ -1151,6 +1147,8 @@
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana/7
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana/7/dashboard
+%%AUDITBEAT%%@dir %%DATADIR%%/auditbeat/module/file_integrity/monitor
+%%AUDITBEAT%%@dir %%DATADIR%%/auditbeat/module/file_integrity/schema
 %%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-file-integrity.json
 %%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-executions.json
 %%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-overview.json
