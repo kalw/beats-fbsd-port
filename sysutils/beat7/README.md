@@ -23,6 +23,21 @@ $ sudo pkg install -y go gmake ca_root_nss portshaker poudriere bash sudo git
 # heredoc needed
 $ sudo -i
 $ bash
+# configure the merged port tree to work with poudriere and create the apropriate jail test env 
+$ cat > /usr/local/etc/poudriere.conf <<EOF
+NO_ZFS=yes
+FREEBSD_HOST=ftp://ftp.freebsd.org
+RESOLV_CONF=/etc/resolv.conf
+BASEFS=/usr/local/poudriere
+USE_PORTLINT=no
+USE_TMPFS=yes
+DISTFILES_CACHE=/usr/ports/distfiles
+CHECK_CHANGED_OPTIONS=yes
+EOF
+$ poudriere ports -c -F -f none -M /usr/local/poudriere/ports/default -p default
+$ echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf
+$ echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf
+$ poudriere jail -c -j 112amd64 -v 11.2-RELEASE -a amd64
 # create a merged port tree with your port
 $ cat > /usr/local/etc/portshaker.conf <<"EOF"
 # vim:set syntax=sh:
@@ -57,21 +72,9 @@ EOF
 $ chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}
 $ portshaker -U 
 $ portshaker -M
-# configure the merged port tree to work with poudriere and create the apropriate jail test env 
-$ cat > /usr/local/etc/poudriere.conf <<EOF
-NO_ZFS=yes
-FREEBSD_HOST=ftp://ftp.freebsd.org
-RESOLV_CONF=/etc/resolv.conf
-BASEFS=/usr/local/poudriere
-USE_PORTLINT=no
-USE_TMPFS=yes
-DISTFILES_CACHE=/usr/ports/distfiles
-CHECK_CHANGED_OPTIONS=yes
-EOF
-$ poudriere ports -c -F -f none -M /usr/local/poudriere/ports/default -p default
-$ poudriere -c -j 112amd64 -V 11.2-RELEASE -a amd64
+
 # test it !
-$ poudriere testport -j 92amd64 -p default category/myport
+$ poudriere testport -j 112amd64 -p default sysutils/beat7
 # play with it
-$ 
+$ cd /usr/local/poudriere/ports/default/sysutils/beat7
 ```
