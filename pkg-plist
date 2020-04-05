@@ -1,13 +1,16 @@
 %%FILEBEAT%%sbin/filebeat
 %%HEARTBEAT%%sbin/heartbeat
 %%METRICBEAT%%sbin/metricbeat
+%%AUDITBEAT%%sbin/auditbeat
 %%FILEBEAT%%@sample etc/filebeat.yml.sample
 %%HEARTBEAT%%@sample etc/heartbeat.yml.sample
 %%METRICBEAT%%@sample etc/metricbeat.yml.sample
+%%AUDITBEAT%%@sample etc/auditbeat.yml.sample
 @dir /var/db/beats
 %%FILEBEAT%%@dir /var/db/beats/filebeat
 %%HEARTBEAT%%@dir /var/db/beats/heartbeat
 %%METRICBEAT%%@dir /var/db/beats/metricbeat
+%%AUDITBEAT%%@dir /var/db/beats/auditbeat
 @dir %%DATADIR%%/metricbeat/module/kubernetes/util
 @dir %%DATADIR%%/metricbeat/module/system/raid/blockinfo
 %%ETCDIR%%/filebeat.modules.d/apache.yml.disabled
