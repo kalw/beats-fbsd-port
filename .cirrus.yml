@@ -15,8 +15,7 @@ task:
     CHECK_CHANGED_OPTIONS=yes
     EOF'
     sudo poudriere ports -c -F -f none -M /usr/local/poudriere/ports/default -p default
-    sudo bash -c '
-    cat > /usr/local/etc/portshaker.conf <<"EOF"
+    sudo bash -c 'cat > /usr/local/etc/portshaker.conf <<"EOF"
     # vim:set syntax=sh:
     #---[ Base directory for mirrored Ports Trees ]---
     mirror_base_dir="/var/cache/portshaker"
@@ -36,7 +35,7 @@ task:
     git_branch="master"
     run_portshaker_command $*
     EOF'
-    sudo chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}
+    sudo bash -c 'chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}'
     sudo portshaker -U
     sudo portshaker -M
   script: |
