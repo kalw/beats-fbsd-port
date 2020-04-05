@@ -35,9 +35,6 @@ DISTFILES_CACHE=/usr/ports/distfiles
 CHECK_CHANGED_OPTIONS=yes
 EOF
 $ poudriere ports -c -F -f none -M /usr/local/poudriere/ports/default -p default
-$ echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf
-$ echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf
-$ poudriere jail -c -j 112amd64 -v 11.2-RELEASE -a amd64
 # create a merged port tree with your port
 $ cat > /usr/local/etc/portshaker.conf <<"EOF"
 # vim:set syntax=sh:
@@ -72,7 +69,9 @@ EOF
 $ chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}
 $ portshaker -U 
 $ portshaker -M
-
+$ echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf
+$ echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf
+$ poudriere jail -c -j 112amd64 -v 11.2-RELEASE -a amd64
 # test it !
 $ poudriere testport -j 112amd64 -p default sysutils/beat7
 # play with it

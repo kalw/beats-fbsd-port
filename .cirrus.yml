@@ -43,8 +43,8 @@ task:
     run_portshaker_command $*
     EOF'
     sudo bash -c 'chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}'
-    sudo portshaker -U
-    sudo portshaker -M
+    sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -U'
+    sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -M'
   script: |
     sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf'
     sudo bash -c 'echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf'
