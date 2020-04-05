@@ -11,8 +11,6 @@
 %%HEARTBEAT%%@dir /var/db/beats/heartbeat
 %%METRICBEAT%%@dir /var/db/beats/metricbeat
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat
-@dir %%DATADIR%%/metricbeat/module/kubernetes/util
-@dir %%DATADIR%%/metricbeat/module/system/raid/blockinfo
 %%ETCDIR%%/filebeat.modules.d/apache.yml.disabled
 %%ETCDIR%%/filebeat.modules.d/auditd.yml.disabled
 %%ETCDIR%%/filebeat.modules.d/elasticsearch.yml.disabled
@@ -1055,6 +1053,28 @@
 %%DATADIR%%/metricbeat/module/zookeeper/server/_meta/data.json
 %%DATADIR%%/metricbeat/module/zookeeper/server/_meta/docs.asciidoc
 %%DATADIR%%/metricbeat/module/zookeeper/server/_meta/fields.yml
+%%DATADIR%%/auditbeat/module/auditd/_meta/accept.json
+%%DATADIR%%/auditbeat/module/auditd/_meta/audit.rules.d/sample-rules-linux-32bit.conf
+%%DATADIR%%/auditbeat/module/auditd/_meta/audit.rules.d/sample-rules-linux-64bit.conf
+%%DATADIR%%/auditbeat/module/auditd/_meta/config.yml.tmpl
+%%DATADIR%%/auditbeat/module/auditd/_meta/data.json
+%%DATADIR%%/auditbeat/module/auditd/_meta/docs.asciidoc
+%%DATADIR%%/auditbeat/module/auditd/_meta/execve.json
+%%DATADIR%%/auditbeat/module/auditd/_meta/fields.yml
+%%DATADIR%%/auditbeat/module/auditd/_meta/kibana/7/dashboard/auditbeat-kernel-executions.json
+%%DATADIR%%/auditbeat/module/auditd/_meta/kibana/7/dashboard/auditbeat-kernel-overview.json
+%%DATADIR%%/auditbeat/module/auditd/_meta/kibana/7/dashboard/auditbeat-kernel-sockets.json
+%%DATADIR%%/auditbeat/module/auditd/module.yml
+%%DATADIR%%/auditbeat/module/file_integrity/_meta/config.yml.tmpl
+%%DATADIR%%/auditbeat/module/file_integrity/_meta/data.json
+%%DATADIR%%/auditbeat/module/file_integrity/_meta/docs.asciidoc
+%%DATADIR%%/auditbeat/module/file_integrity/_meta/fields.yml
+%%DATADIR%%/auditbeat/module/file_integrity/_meta/kibana/7/dashboard/auditbeat-file-integrity.json
+%%DATADIR%%/auditbeat/module/file_integrity/module.yml
+%%DATADIR%%/auditbeat/module/file_integrity/schema.fbs
+%%FILEBEAT%%@dir /var/db/beats/filebeat/kibana
+%%FILEBEAT%%@dir /var/db/beats/filebeat/kibana/7
+%%FILEBEAT%%@dir /var/db/beats/filebeat/kibana/7/dashboard
 %%FILEBEAT%%/var/db/beats/filebeat/kibana/7/dashboard/Filebeat-Kafka-overview.json
 %%FILEBEAT%%/var/db/beats/filebeat/kibana/7/dashboard/Filebeat-Mongodb-overview.json
 %%FILEBEAT%%/var/db/beats/filebeat/kibana/7/dashboard/Filebeat-Postgresql-overview.json
@@ -1081,6 +1101,12 @@
 %%FILEBEAT%%/var/db/beats/filebeat/kibana/7/dashboard/filebeat-santa-log-overview.json
 %%FILEBEAT%%/var/db/beats/filebeat/kibana/7/dashboard/osquery-compliance.json
 %%FILEBEAT%%/var/db/beats/filebeat/kibana/7/dashboard/osquery-rootkit.json
+%%HEARTBEAT%%@dir /var/db/beats/heartbeat/kibana
+%%METRICBEAT%%@dir /var/db/beats/metricbeat/kibana/7/dashboard
+%%METRICBEAT%%@dir /var/db/beats/metricbeat/kibana/7
+%%METRICBEAT%%@dir /var/db/beats/metricbeat/kibana
+%%METRICBEAT%%@dir %%DATADIR%%/metricbeat/module/kubernetes/util
+%%METRICBEAT%%@dir %%DATADIR%%/metricbeat/module/system/raid/blockinfo
 %%METRICBEAT%%/var/db/beats/metricbeat/kibana/7/dashboard/Metricbeat-Host-Services-overview.json
 %%METRICBEAT%%/var/db/beats/metricbeat/kibana/7/dashboard/Metricbeat-aerospike-overview.json
 %%METRICBEAT%%/var/db/beats/metricbeat/kibana/7/dashboard/Metricbeat-apache-overview.json
@@ -1118,3 +1144,12 @@
 %%METRICBEAT%%/var/db/beats/metricbeat/kibana/7/dashboard/Metricbeat-zookeeper-overview.json
 %%METRICBEAT%%/var/db/beats/metricbeat/kibana/7/dashboard/metricbeat-nginx-overview.json
 %%METRICBEAT%%/var/db/beats/metricbeat/kibana/7/dashboard/metricbeat-windows-service.json
+%%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana
+%%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana/7
+%%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana/7/dashboard
+%%AUDITBEAT%%@dir %%DATADIR%%/auditbeat/module/file_integrity/monitor
+%%AUDITBEAT%%@dir %%DATADIR%%/auditbeat/module/file_integrity/schema
+%%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-file-integrity.json
+%%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-executions.json
+%%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-overview.json
+%%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-sockets.json
