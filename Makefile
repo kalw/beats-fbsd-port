@@ -2,7 +2,7 @@
 # $FreeBSD: head/sysutils/beats/Makefile 521867 2020-01-02 18:56:15Z glewis $
 
 PORTNAME=	beats
-PORTVERSION=	7.6.2
+PORTVERSION=	7.6.1
 DISTVERSIONPREFIX=v
 CATEGORIES=	sysutils
 PKGNAMESUFFIX?=	7
