@@ -3,6 +3,6 @@ freebsd_instance:
 
 task:
   install_script: pkg install -y gmake go
-  script: sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
+  script: sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make -j $(sysctl -n hw.ncpu) -C sysutils/beat7/ package
   binaries_artifacts:
-    path: "work/pkg/*"
+    path: "sysutils/beat7/work/pkg/*"

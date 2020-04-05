@@ -71,5 +71,9 @@ do-install:
 	(cd ${WRKSRC}/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
 	(cd ${WRKSRC}/${BEATMOD}/modules.d && ${COPYTREE_SHARE} . ${STAGEDIR}${ETCDIR}/${BEATMOD}.modules.d)
 .endfor
+.for BEATMOD in auditbeat
+	${MKDIR} ${STAGEDIR}${DATADIR}/${BEATMOD}/module
+	(cd ${WRKSRC}/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
+.endfor
 
 .include <bsd.port.mk>
