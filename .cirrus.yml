@@ -51,7 +51,7 @@ task:
         sudo poudriere jail -c -j 112amd64 -v 11.2-RELEASE -a amd64
         sudo poudriere bulk -j 112amd64 -p default sysutils/beats7
         sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE
-        sudo rsync -av /usr/local/poudriere/data/packages/113amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE/
+        sudo rsync -av /usr/local/poudriere/data/packages/112amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE/
       binaries_artifacts:
         path: "artefacts/*"
     - script: |
