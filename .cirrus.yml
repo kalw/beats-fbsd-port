@@ -2,7 +2,7 @@ freebsd_instance:
   image_family: freebsd-11-3-snap
 task:
   install_script: |
-    pkg install -y go gmake ca_root_nss portshaker poudriere bash sudo git
+    sudo pkg install -y go gmake ca_root_nss portshaker poudriere bash sudo git
     sudo bash -c 'cat > /usr/local/etc/poudriere.conf <<EOF
     NO_ZFS=yes
     FREEBSD_HOST=ftp://ftp.freebsd.org
@@ -44,6 +44,7 @@ task:
     sudo bash -c 'chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}'
     sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -U'
     sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -M'
+    sudo mkdir -p /usr/ports/distfiles
   matrix:
     - script: |
         sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf'
@@ -52,7 +53,7 @@ task:
         sudo poudriere testport -j 112amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 112amd64 -p default sysutils/beats7
         sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/112amd64-default/All/sysutils.beats7.shar '
+        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > ${CIRRUS_WORKING_DIR}/artefacts/sysutils.beats7.shar '
         sudo rsync -av /usr/local/poudriere/data/packages/112amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE/
       binaries_artifacts:
         path: "artefacts/*/*"
@@ -62,7 +63,7 @@ task:
         sudo poudriere testport -j 113amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 113amd64 -p default sysutils/beats7
         sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/112amd64-default/All/sysutils.beats7.shar '
+        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > ${CIRRUS_WORKING_DIR}/artefacts/sysutils.beats7.shar '
         sudo rsync -av /usr/local/poudriere/data/packages/113amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE/
       binaries_artifacts:
         path: "artefacts/*/*"
