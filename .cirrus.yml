@@ -14,6 +14,17 @@ task:
     CHECK_CHANGED_OPTIONS=yes
     EOF'
     sudo poudriere ports -c -F -f none -M /usr/local/poudriere/ports/default -p default
+    sudo bash -c 'mkdir -p /usr/local/etc/poudriere.d/options/sysutils_beats7/'
+    sudo bash -c 'cat > /usr/local/etc/poudriere.d/options/sysutils_beats7/options <<EOF
+    # Options for beats7-7.6.2
+    _OPTIONS_READ=beats7-7.6.2
+    _FILE_COMPLETE_OPTIONS_LIST=AUDITBEAT FILEBEAT HEARTBEAT METRICBEAT PACKETBEAT
+    OPTIONS_FILE_SET+=AUDITBEAT
+    OPTIONS_FILE_SET+=FILEBEAT
+    OPTIONS_FILE_SET+=HEARTBEAT
+    OPTIONS_FILE_SET+=METRICBEAT
+    OPTIONS_FILE_SET+=PACKETBEAT
+    EOF'
     sudo bash -c 'cat > /usr/local/etc/portshaker.conf <<"EOF"
     # vim:set syntax=sh:
     #---[ Base directory for mirrored Ports Trees ]---
@@ -53,7 +64,7 @@ task:
         sudo poudriere testport -j 112amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 112amd64 -p default sysutils/beats7
         sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > ${CIRRUS_WORKING_DIR}/artefacts/sysutils.beats7.shar '
+        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/*/All/ '
         sudo rsync -av /usr/local/poudriere/data/packages/112amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE/
       binaries_artifacts:
         path: "artefacts/*/*"
@@ -63,7 +74,7 @@ task:
         sudo poudriere testport -j 113amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 113amd64 -p default sysutils/beats7
         sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > ${CIRRUS_WORKING_DIR}/artefacts/sysutils.beats7.shar '
+        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/*/All/ '
         sudo rsync -av /usr/local/poudriere/data/packages/113amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE/
       binaries_artifacts:
         path: "artefacts/*/*"
