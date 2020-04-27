@@ -19,7 +19,7 @@ $ fetch https://github.com/kalw/beats-fbsd-port/archive/master.zip
 $ unzip master.zip 
 
 # build and package
-$ cd beats-fbsd-port*
+$ cd beats-fbsd-port*/sysutils/beats7
 $ sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
 ```
 
