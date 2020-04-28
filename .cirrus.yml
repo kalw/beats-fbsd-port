@@ -64,7 +64,7 @@ task:
         sudo poudriere testport -j 112amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 112amd64 -p default sysutils/beats7
         sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/*/All/sysutils_beats7.shar '
+        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/112amd64-default/All/sysutils_beats7.shar '
         sudo rsync -av /usr/local/poudriere/data/packages/112amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE/
       binaries_artifacts:
         path: "artefacts/*/*"
@@ -74,7 +74,7 @@ task:
         sudo poudriere testport -j 113amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 113amd64 -p default sysutils/beats7
         sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/*/All/sysutils_beats7.shar '
+        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/113amd64-default/All/sysutils_beats7.shar '
         sudo rsync -av /usr/local/poudriere/data/packages/113amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE/
       binaries_artifacts:
         path: "artefacts/*/*"
