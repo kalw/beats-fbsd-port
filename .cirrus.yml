@@ -45,8 +45,8 @@ task:
     sudo poudriere ports -c -F -f none -M /usr/local/poudriere/ports/default -p default
     sudo bash -c 'mkdir -p /usr/local/etc/poudriere.d/options/sysutils_beats7/'
     sudo bash -c 'cat > /usr/local/etc/poudriere.d/options/sysutils_beats7/options <<EOF
-    # Options for beats7-7.6.2
-    _OPTIONS_READ=beats7-7.6.2
+    # Options for beats7
+    _OPTIONS_READ=beats7
     _FILE_COMPLETE_OPTIONS_LIST=AUDITBEAT FILEBEAT HEARTBEAT METRICBEAT PACKETBEAT
     OPTIONS_FILE_SET+=AUDITBEAT
     OPTIONS_FILE_SET+=FILEBEAT
