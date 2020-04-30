@@ -2,15 +2,18 @@
 %%HEARTBEAT%%sbin/heartbeat
 %%METRICBEAT%%sbin/metricbeat
 %%AUDITBEAT%%sbin/auditbeat
+%%AUDITBEAT%%sbin/packetbeat
 %%FILEBEAT%%@sample etc/filebeat.yml.sample
 %%HEARTBEAT%%@sample etc/heartbeat.yml.sample
 %%METRICBEAT%%@sample etc/metricbeat.yml.sample
 %%AUDITBEAT%%@sample etc/auditbeat.yml.sample
+%%PACKETBEAT%%@sample etc/packetbeat.yml.sample
 @dir /var/db/beats
 %%FILEBEAT%%@dir /var/db/beats/filebeat
 %%HEARTBEAT%%@dir /var/db/beats/heartbeat
 %%METRICBEAT%%@dir /var/db/beats/metricbeat
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat
+%%PACKETBEAT%%@dir /var/db/beats/packetbeat
 %%ETCDIR%%/filebeat.modules.d/apache.yml.disabled
 %%ETCDIR%%/filebeat.modules.d/auditd.yml.disabled
 %%ETCDIR%%/filebeat.modules.d/elasticsearch.yml.disabled
@@ -1147,9 +1150,25 @@
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana/7
 %%AUDITBEAT%%@dir /var/db/beats/auditbeat/kibana/7/dashboard
+%%PACKETBEAT%%@dir /var/db/beats/packetbeat/kibana
+%%PACKETBEAT%%@dir /var/db/beats/packetbeat/kibana/7
+%%PACKETBEAT%%@dir /var/db/beats/packetbeat/kibana/7/dashboard
 %%AUDITBEAT%%@dir %%DATADIR%%/auditbeat/module/file_integrity/monitor
 %%AUDITBEAT%%@dir %%DATADIR%%/auditbeat/module/file_integrity/schema
 %%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-file-integrity.json
 %%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-executions.json
 %%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-overview.json
 %%AUDITBEAT%%/var/db/beats/auditbeat/kibana/7/dashboard/auditbeat-kernel-sockets.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-cassandra.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-dhcpv4.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-dns-overview.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-dns-tunneling.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-flows.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-http.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-mongodb.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-mysql.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-nfs.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-overview.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-pgsql.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-thrift.json
+%%PACKETBEAT%%/var/db/beats/packetbeat/kibana/7/dashboard/Packetbeat-tls.json
