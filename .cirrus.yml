@@ -1,4 +1,6 @@
 release_script_template: &RELEASE_SCRIPT_TEMPLATE
+  environment:
+    GITHUB_TOKEN: ENCRYPTED[f405516960bcf692dc7d4d3f46df621cfb1a0f2aec27c453bc83d839ff11192f9d79e35ca4e516780a3c0ad752e3c8c5]
   script: |
     echo ${CIRRUS_TASK_NAME}
     if [[ "$CIRRUS_RELEASE" == "" ]]; then
