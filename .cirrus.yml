@@ -52,7 +52,7 @@ task:
     OPTIONS_FILE_SET+=FILEBEAT
     OPTIONS_FILE_SET+=HEARTBEAT
     OPTIONS_FILE_SET+=METRICBEAT
-    OPTIONS_FILE_UNSET+=PACKETBEAT
+    OPTIONS_FILE_SET+=PACKETBEAT
     EOF'
     sudo bash -c 'cat > /usr/local/etc/portshaker.conf <<"EOF"
     # vim:set syntax=sh:
