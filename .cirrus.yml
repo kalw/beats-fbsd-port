@@ -89,24 +89,24 @@ task:
         echo ${CIRRUS_TASK_NAME}
         sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf'
         sudo bash -c 'echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf'
-        sudo poudriere jail -c -j 112amd64 -v 11.2-RELEASE -a amd64
+        sudo poudriere jail -c -j 112amd64 -v ${CIRRUS_TASK_NAME} -a amd64
         sudo poudriere testport -j 112amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 112amd64 -p default sysutils/beats7
-        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE
+        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}
         sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/112amd64-default/All/sysutils_beats7.shar '
-        sudo rsync -av /usr/local/poudriere/data/packages/112amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.2-RELEASE/
+        sudo rsync -av /usr/local/poudriere/data/packages/112amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}/
       binaries_artifacts:
         path: "artefacts/*/*"
     - name: 11.3-STABLE
       build_script: |
         echo ${CIRRUS_TASK_NAME}
         sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/113amd64-make.conf'
-        sudo poudriere jail -c -j 113amd64 -v 11.3-STABLE -a amd64
+        sudo poudriere jail -c -j 113amd64 -v ${CIRRUS_TASK_NAME} -a amd64
         sudo poudriere testport -j 113amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 113amd64 -p default sysutils/beats7
-        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE
+        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}
         sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/113amd64-default/All/sysutils_beats7.shar '
-        sudo rsync -av /usr/local/poudriere/data/packages/113amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/11.3-STABLE/
+        sudo rsync -av /usr/local/poudriere/data/packages/113amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}/
       binaries_artifacts:
         path: "artefacts/*/*"
       << : *RELEASE_SCRIPT_TEMPLATE
@@ -114,12 +114,12 @@ task:
       build_script: |
         echo ${CIRRUS_TASK_NAME}
         sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/121amd64-make.conf'
-        sudo poudriere jail -c -j 121amd64 -v 12.1-RELEASE -a amd64
+        sudo poudriere jail -c -j 121amd64 -v ${CIRRUS_TASK_NAME} -a amd64
         sudo poudriere testport -j 121amd64 -p default sysutils/beats7
         sudo poudriere bulk -j 121amd64 -p default sysutils/beats7
-        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/12.1-RELEASE
+        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}
         sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ ) > /usr/local/poudriere/data/packages/121amd64-default/All/sysutils_beats7.shar '
-        sudo rsync -av /usr/local/poudriere/data/packages/121amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/12.1-RELEASE/
+        sudo rsync -av /usr/local/poudriere/data/packages/121amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}/
       binaries_artifacts:
         path: "artefacts/*/*"
       << : *RELEASE_SCRIPT_TEMPLATE
