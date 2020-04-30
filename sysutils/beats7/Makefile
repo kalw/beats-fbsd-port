@@ -32,7 +32,7 @@ FILEBEAT_VARS=	GO_TARGETS+=filebeat
 
 PACKETBEAT_DESC=Packetbeat
 PACKETBEAT_VARS=GO_TARGETS+=packetbeat
-PACKETBEAT_BROKEN=	An underlying library is currently broken under FreeBSD
+#PACKETBEAT_BROKEN=	An underlying library is currently broken under FreeBSD
 
 METRICBEAT_DESC=Metricbeat
 METRICBEAT_VARS=GO_TARGETS+=metricbeat
