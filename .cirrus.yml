@@ -14,7 +14,7 @@ release_script_template: &RELEASE_SCRIPT_TEMPLATE
     fi
 
     file_content_type="application/octet-stream"
-    files_to_upload=[$(ls ${CIRRUS_WORKING_DIR}/artefacts/)]
+    files_to_upload=$(find ${CIRRUS_WORKING_DIR}/artefacts/ -type f)
 
     for fpath in $files_to_upload
     do
