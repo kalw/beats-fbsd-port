@@ -6,6 +6,7 @@ PORTVERSION=	7.6.2
 DISTVERSIONPREFIX=v
 CATEGORIES=	sysutils
 PKGNAMESUFFIX?=	7
+CONFLICTS_INSTALL= zstd
 
 MAINTAINER=	elastic@FreeBSD.org
 COMMENT=	Collect logs locally and send to remote logstash
