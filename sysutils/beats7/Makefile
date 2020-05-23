@@ -9,7 +9,7 @@ PKGNAMESUFFIX?=	7
 CONFLICTS_INSTALL= zstd
 
 MAINTAINER=	elastic@FreeBSD.org
-COMMENT=	Collect logs locally and send to remote logstash
+COMMENT=	Send logs, network, heartbeat and system data to elasticsearch or logstash
 
 LICENSE=	APACHE20
 
@@ -57,7 +57,7 @@ do-install:
 		${STAGEDIR}${PREFIX}/sbin
 	${INSTALL_DATA} ${WRKSRC}/${GO_TARGET}/${GO_TARGET}.yml \
 		${STAGEDIR}${PREFIX}/etc/${GO_TARGET}.yml.sample
-	(DEST_COMPONENT_PATH_UNSTAGED=/var/db/beats/${GO_TARGET}/kibana; \
+	(DEST_COMPONENT_PATH_UNSTAGED=/usr/local/share/${GO_TARGET}/kibana; \
 		DEST_COMPONENT_PATH=${STAGEDIR}$${DEST_COMPONENT_PATH_UNSTAGED}; \
 		${MKDIR} $${DEST_COMPONENT_PATH}; \
 		DASHBOARD_FIND_ARGS="-path */_meta/kibana -type d"; \
