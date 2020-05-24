@@ -21,13 +21,17 @@ rcvar=${name}_enable
 load_rc_config $name
 
 : ${heartbeat_enable:="NO"}
-: ${heartbeat_config:="-path.home /usr/local/share/beats/${name} -path.config %%PREFIX%%/etc"}
+: ${heartbeat_config:="%%ETCDIR%%"}
+: ${heartbeat_home:="%%DATADIR%%/heartbeat"}
+: ${heartbeat_logs:="/var/log/beats"}
+: ${heartbeat_data:="/var/db/beats/heartbeat"}
+
 
 # daemon
 start_precmd=heartbeat_prestart
 command=/usr/sbin/daemon
 pidfile="/var/run/${name}"
-command_args="-rfP ${pidfile} %%PREFIX%%/sbin/${name} ${heartbeat_config}"
+command_args="-rP ${pidfile} %%PREFIX%%/sbin/${name} ${heartbeat_flags} -path.config ${heartbeat_config} --path.home ${heartbeat_home} --path.data ${heartbeat_data} --path.logs ${heartbeat_logs}"
 
 heartbeat_prestart() {
 # Have to empty rc_flags so they don't get passed to daemon(8)

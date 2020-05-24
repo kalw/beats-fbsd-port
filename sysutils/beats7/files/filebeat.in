@@ -21,13 +21,16 @@ rcvar=${name}_enable
 load_rc_config $name
 
 : ${filebeat_enable:="NO"}
-: ${filebeat_config:="-path.home /usr/local/share/beats/${name} -path.config %%PREFIX%%/etc"}
+: ${filebeat_config:="%%ETCDIR%%"}
+: ${filebeat_home:="%%DATADIR%%/filebeat"}
+: ${filebeat_logs:="/var/log/beats"}
+: ${filebeat_data:="/var/db/beats/filebeat"}
 
 # daemon
 start_precmd=filebeat_prestart
 command=/usr/sbin/daemon
 pidfile="/var/run/${name}"
-command_args="-rfP ${pidfile} %%PREFIX%%/sbin/${name} ${filebeat_config}"
+command_args="-rP ${pidfile} %%PREFIX%%/sbin/${name} ${filebeat_flags} -path.config ${filebeat_config} --path.home ${filebeat_home} --path.data ${filebeat_data} --path.logs ${filebeat_logs}"
 
 filebeat_prestart() {
 # Have to empty rc_flags so they don't get passed to daemon(8)

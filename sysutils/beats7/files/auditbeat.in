@@ -21,14 +21,16 @@ rcvar=${name}_enable
 load_rc_config $name
 
 : ${auditbeat_enable:="NO"}
-: ${auditbeat_config:="-path.home /usr/local/share/beats/${name} -path.config %%PREFIX%%/etc"}
+: ${auditbeat_config:="%%ETCDIR%%"}
+: ${auditbeat_home:="%%DATADIR%%/auditbeat"}
+: ${auditbeat_logs:="/var/log/beats"}
+: ${auditbeat_data:="/var/db/beats/auditbeat"
 
 # daemon
 start_precmd=auditbeat_prestart
 command=/usr/sbin/daemon
 pidfile="/var/run/${name}"
-command_args="-rfP ${pidfile} -p ${pidfile}.child %%PREFIX%%/sbin/${name} ${auditbeat_config}"
-
+command_args="-rP ${pidfile} %%PREFIX%%/sbin/${name} ${auditbeat_flags} -path.config ${auditbeat_config} --path.home ${auditbeat_home} --path.data ${auditbeat_data} --path.logs ${auditbeat_logs}"
 auditbeat_prestart() {
 # Have to empty rc_flags so they don't get passed to daemon(8)
 	rc_flags=""

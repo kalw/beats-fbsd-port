@@ -21,13 +21,16 @@ rcvar=${name}_enable
 load_rc_config $name
 
 : ${packetbeat_enable:="NO"}
-: ${packetbeat_config:="-path.home /usr/local/share/beats/${name} -path.config %%PREFIX%%/etc"}
+: ${packetbeat_config:="%%ETCDIR%%"}
+: ${packetbeat_home:="%%DATADIR%%/packetbeat"}
+: ${packetbeat_logs:="/var/log/beats"}
+: ${packetbeat_data:="/var/db/beats/packetbeat"}
 
 # daemon
 start_precmd=packetbeat_prestart
 command=/usr/sbin/daemon
 pidfile="/var/run/${name}"
-command_args="-rfP ${pidfile} %%PREFIX%%/sbin/${name} ${packetbeat_config}"
+command_args="-rP ${pidfile} %%PREFIX%%/sbin/${name} ${packetbeat_flags} -path.config ${packetbeat_config} --path.home ${packetbeat_home} --path.data ${packetbeat_data} --path.logs ${packetbeat_logs}"
 
 packetbeat_prestart() {
 # Have to empty rc_flags so they don't get passed to daemon(8)
