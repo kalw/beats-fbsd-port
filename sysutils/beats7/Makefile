@@ -1,30 +1,29 @@
-# Created by: Palle Girgensohn <girgen@FreeBSD.org>
-# $FreeBSD: head/sysutils/beats/Makefile 521867 2020-01-02 18:56:15Z glewis $
+# $FreeBSD$
 
 PORTNAME=	beats
 PORTVERSION=	7.6.2
 DISTVERSIONPREFIX=v
 CATEGORIES=	sysutils
 PKGNAMESUFFIX?=	7
-CONFLICTS_INSTALL= zstd
 
 MAINTAINER=	elastic@FreeBSD.org
-COMMENT=	Send logs, network, heartbeat and system data to elasticsearch or logstash
+COMMENT=	Send logs, network, metrics and heartbeat to elasticsearch or logstash
 
 LICENSE=	APACHE20
-
-CONFLICTS=	beats
 
 USES=		gmake go
 USE_GITHUB=	yes
 GH_ACCOUNT=	elastic
 USE_RC_SUBR=	${GO_TARGETS}
 
+CONFLICTS_INSTALL= zstd
+CONFLICTS=	beats
+
 GO_PKGNAME=	github.com/${GH_ACCOUNT}/${GH_PROJECT}
 FIND_ARGS=	"! ( -regex .*/*\.(go|in|log) ) ! -path *test* ! -path *vendor*"
 MAKE_ENV+=	GOBUILD_FLAGS=""
 
-OPTIONS_DEFAULT=FILEBEAT HEARTBEAT METRICBEAT 
+OPTIONS_DEFAULT=FILEBEAT HEARTBEAT METRICBEAT
 OPTIONS_DEFINE=	FILEBEAT HEARTBEAT METRICBEAT AUDITBEAT PACKETBEAT
 OPTIONS_SUB=	yes
 
@@ -33,7 +32,6 @@ FILEBEAT_VARS=	GO_TARGETS+=filebeat
 
 PACKETBEAT_DESC=Packetbeat
 PACKETBEAT_VARS=GO_TARGETS+=packetbeat
-#PACKETBEAT_BROKEN=	An underlying library is currently broken under FreeBSD
 
 METRICBEAT_DESC=Metricbeat
 METRICBEAT_VARS=GO_TARGETS+=metricbeat
@@ -52,19 +50,22 @@ do-build:
 .endfor
 
 do-install:
-.for GO_TARGET in ${GO_TARGETS}
-	${INSTALL_PROGRAM} ${GO_WRKSRC}/${GO_TARGET}/${GO_TARGET} \
+	${MKDIR} ${STAGEDIR}${ETCDIR}
+.for BEATMOD in ${GO_TARGETS}
+	${MKDIR} ${STAGEDIR}/var/db/beats/${BEATMOD}
+	${INSTALL_PROGRAM} ${GO_WRKSRC}/${BEATMOD}/${BEATMOD} \
 		${STAGEDIR}${PREFIX}/sbin
-	${INSTALL_DATA} ${WRKSRC}/${GO_TARGET}/${GO_TARGET}.yml \
-		${STAGEDIR}${PREFIX}/etc/${GO_TARGET}.yml.sample
-	(DEST_COMPONENT_PATH_UNSTAGED=/usr/local/share/${GO_TARGET}/kibana; \
-		DEST_COMPONENT_PATH=${STAGEDIR}$${DEST_COMPONENT_PATH_UNSTAGED}; \
-		${MKDIR} $${DEST_COMPONENT_PATH}; \
+	${INSTALL_DATA} ${WRKSRC}/${BEATMOD}/${BEATMOD}.yml \
+		${STAGEDIR}${ETCDIR}/${BEATMOD}.yml.sample
+	${INSTALL_DATA} ${WRKSRC}/${BEATMOD}/${BEATMOD}.reference.yml \
+		${STAGEDIR}${ETCDIR}/${BEATMOD}.yml.reference
+	(KIBANA_PATH=${STAGEDIR}${DATADIR}/${BEATMOD}/kibana; \
+		${MKDIR} $${KIBANA_PATH}; \
 		DASHBOARD_FIND_ARGS="-path */_meta/kibana -type d"; \
-		DASHBOARD_PATHS=$$(${SETENV} ${FIND} ${WRKSRC}/${GO_TARGET} $${DASHBOARD_FIND_ARGS}); \
+		DASHBOARD_PATHS=$$(${SETENV} ${FIND} ${WRKSRC}/${BEATMOD} $${DASHBOARD_FIND_ARGS}); \
 		for DASHBOARD_PATH in $${DASHBOARD_PATHS}; \
 		do \
-			(cd $${DASHBOARD_PATH} && ${COPYTREE_SHARE} . $${DEST_COMPONENT_PATH}); \
+			(cd $${DASHBOARD_PATH} && ${COPYTREE_SHARE} . $${KIBANA_PATH}); \
 		done)
 .endfor
 .for BEATMOD in filebeat metricbeat
