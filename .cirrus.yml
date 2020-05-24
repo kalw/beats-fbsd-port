@@ -2,126 +2,30 @@ release_script_template: &RELEASE_SCRIPT_TEMPLATE
   environment:
     GITHUB_TOKEN: ENCRYPTED[f405516960bcf692dc7d4d3f46df621cfb1a0f2aec27c453bc83d839ff11192f9d79e35ca4e516780a3c0ad752e3c8c5]
   script: |
-    echo ${CIRRUS_TASK_NAME}
-    if [[ "$CIRRUS_RELEASE" == "" ]]; then
-      echo "Not a release. No need to deploy!"
-      exit 0
-    fi
-
-    if [[ "$GITHUB_TOKEN" == "" ]]; then
-      echo "Please provide GitHub access token via GITHUB_TOKEN environment variable!"
-      exit 1
-    fi
-
-    file_content_type="application/octet-stream"
-    files_to_upload=$(find ${CIRRUS_WORKING_DIR}/artefacts/ -type f -name '*beat*')
-
-    for fpath in $files_to_upload
-    do
-      echo "Uploading $fpath..."
-      name=$(basename "$fpath")
-      url_to_upload="https://uploads.github.com/repos/$CIRRUS_REPO_FULL_NAME/releases/$CIRRUS_RELEASE/assets?name=$name"
-      curl -X POST \
-        --data-binary @$fpath \
-        --header "Authorization: token $GITHUB_TOKEN" \
-        --header "Content-Type: $file_content_type" \
-      $url_to_upload
-    done
+    ./custom_ports_04_release_github.sh
 freebsd_instance:
   image_family: freebsd-11-3-snap
 task:
   install_script: |
-    sudo pkg install -y go gmake ca_root_nss portshaker poudriere bash sudo git
-    sudo bash -c 'cat > /usr/local/etc/poudriere.conf <<EOF
-    NO_ZFS=yes
-    FREEBSD_HOST=ftp://ftp.freebsd.org
-    RESOLV_CONF=/etc/resolv.conf
-    BASEFS=/usr/local/poudriere
-    USE_PORTLINT=no
-    USE_TMPFS=yes
-    DISTFILES_CACHE=/usr/ports/distfiles
-    CHECK_CHANGED_OPTIONS=yes
-    EOF'
-    sudo poudriere ports -c -F -f none -M /usr/local/poudriere/ports/default -p default
-    sudo bash -c 'mkdir -p /usr/local/etc/poudriere.d/options/sysutils_beats7/'
-    sudo bash -c 'cat > /usr/local/etc/poudriere.d/options/sysutils_beats7/options <<EOF
-    # Options for beats7
-    _OPTIONS_READ=beats7
-    _FILE_COMPLETE_OPTIONS_LIST=AUDITBEAT FILEBEAT HEARTBEAT METRICBEAT PACKETBEAT
-    OPTIONS_FILE_SET+=AUDITBEAT
-    OPTIONS_FILE_SET+=FILEBEAT
-    OPTIONS_FILE_SET+=HEARTBEAT
-    OPTIONS_FILE_SET+=METRICBEAT
-    OPTIONS_FILE_SET+=PACKETBEAT
-    EOF'
-    sudo bash -c 'cat > /usr/local/etc/portshaker.conf <<"EOF"
-    # vim:set syntax=sh:
-    #---[ Base directory for mirrored Ports Trees ]---
-    mirror_base_dir="/var/cache/portshaker"
-    #---[ Directories where to merge ports ]---
-    ports_trees="default"
-    use_zfs="no"
-    poudriere_ports_mountpoint="/usr/local/poudriere/ports"
-    default_poudriere_tree="default"
-    default_merge_from="freebsd beat7"
-    EOF'
-    sudo bash -c 'cat > /usr/local/etc/portshaker.d/beat7 <<"EOF"
-    #!/bin/sh
-    shift
-    . /usr/local/share/portshaker/portshaker.subr
-    method="git"
-    git_clone_uri="https://github.com/kalw/beats-fbsd-port.git"
-    git_branch="master"
-    run_portshaker_command $*
-    EOF'
-    sudo bash -c 'cat > /usr/local/etc/portshaker.d/freebsd <<"EOF"
-    #!/bin/sh
-    shift
-    . /usr/local/share/portshaker/portshaker.subr
-    method="portsnap"
-    run_portshaker_command $*
-    EOF'
-    sudo bash -c 'chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}'
-    sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -U'
-    sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -M'
-    sudo mkdir -p /usr/ports/distfiles
+    ./custom_ports_01_prepare.sh
   matrix:
     - name: 11.2-RELEASE
       build_script: |
         echo ${CIRRUS_TASK_NAME}
-        sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/112amd64-make.conf'
-        sudo bash -c 'echo "ALLOW_UNSUPPORTED_SYSTEM=yes" >> /usr/local/etc/poudriere.d/112amd64-make.conf'
-        sudo poudriere jail -c -j 112amd64 -v ${CIRRUS_TASK_NAME} -a amd64
-        sudo poudriere testport -j 112amd64 -p default sysutils/beats7
-        sudo poudriere bulk -j 112amd64 -p default sysutils/beats7
-        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ | grep -v README.md ) > /usr/local/poudriere/data/packages/112amd64-default/All/sysutils_beats7.shar '
-        sudo rsync -av /usr/local/poudriere/data/packages/112amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}/
+        ./custom_ports_03_build.sh
       binaries_artifacts:
         path: "artefacts/*/*"
     - name: 11.3-STABLE
       build_script: |
         echo ${CIRRUS_TASK_NAME}
-        sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/113amd64-make.conf'
-        sudo poudriere jail -c -j 113amd64 -v ${CIRRUS_TASK_NAME} -a amd64
-        sudo poudriere testport -j 113amd64 -p default sysutils/beats7
-        sudo poudriere bulk -j 113amd64 -p default sysutils/beats7
-        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ | grep -v README.md ) > /usr/local/poudriere/data/packages/113amd64-default/All/sysutils_beats7.shar '
-        sudo rsync -av /usr/local/poudriere/data/packages/113amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}/
+        ./custom_ports_03_build.sh
       binaries_artifacts:
         path: "artefacts/*/*"
       << : *RELEASE_SCRIPT_TEMPLATE
     - name: 12.1-RELEASE
       build_script: |
         echo ${CIRRUS_TASK_NAME}
-        sudo bash -c 'echo "BATCH=yes" > /usr/local/etc/poudriere.d/121amd64-make.conf'
-        sudo poudriere jail -c -j 121amd64 -v ${CIRRUS_TASK_NAME} -a amd64
-        sudo poudriere testport -j 121amd64 -p default sysutils/beats7
-        sudo poudriere bulk -j 121amd64 -p default sysutils/beats7
-        sudo mkdir -p ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}
-        sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; shar $(find sysutils/beats7/ | grep -v README.md ) > /usr/local/poudriere/data/packages/121amd64-default/All/sysutils_beats7.shar '
-        sudo rsync -av /usr/local/poudriere/data/packages/121amd64-default/All/ ${CIRRUS_WORKING_DIR}/artefacts/${CIRRUS_TASK_NAME}/
+        ./custom_ports_03_build.sh
       binaries_artifacts:
         path: "artefacts/*/*"
       << : *RELEASE_SCRIPT_TEMPLATE
