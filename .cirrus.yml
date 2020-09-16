@@ -6,6 +6,7 @@ release_script_template: &RELEASE_SCRIPT_TEMPLATE
 freebsd_instance:
   image_family: freebsd-11-4
 task:
+  timeout_in: 120m
   install_script: |
     ./custom_ports_01_prepare.sh
   matrix:
