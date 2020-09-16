@@ -12,7 +12,7 @@ for CUSTOM_PORT_PATH in ${CUSTOM_PORTS_PATH} ; do
         sudo bash -c "cp ${CUSTOM_PORT_WORKING_DIR}/.options /usr/local/etc/poudriere.d/options/\$(echo ${CUSTOM_PORT_PATH}|sed -e 's/\//_/' )/options"
     fi
     sudo poudriere testport -j ${CUSTOM_PORT_RELEASE_TARGET_MINIFIED} -p default ${CUSTOM_PORT_PATH}
-    sudo poudriere bulk -j ${CUSTOM_PORT_RELEASE_TARGET_MINIFIED} -p default ${CUSTOM_PORT_PATH}
+    sudo poudriere bulk -vv -j ${CUSTOM_PORT_RELEASE_TARGET_MINIFIED} -p default ${CUSTOM_PORT_PATH}
     sudo mkdir -p ${CUSTOM_PORT_TMP_DIR}/artefacts/${CUSTOM_PORT_RELEASE_TARGET}
     sudo bash -c 'cd /usr/local/poudriere/ports/default/ ; find sysutils/beats7/ \( ! -name .options ! -name README.md \) '
     sudo bash -c "cd /usr/local/poudriere/ports/default/ ; shar \$(find ${CUSTOM_PORT_PATH}/ \( ! -name .options ! -name README.md \)) > /usr/local/poudriere/data/packages/${CUSTOM_PORT_RELEASE_TARGET_MINIFIED}-default/All/\$(echo ${CUSTOM_PORT_PATH}|sed -e 's/\//_/' ).shar "
