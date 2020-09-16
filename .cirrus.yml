@@ -4,7 +4,7 @@ release_script_template: &RELEASE_SCRIPT_TEMPLATE
   script: |
     ./custom_ports_04_release_github.sh
 freebsd_instance:
-  image_family: freebsd-11-3-snap
+  image_family: freebsd-11-4
 task:
   install_script: |
     ./custom_ports_01_prepare.sh
