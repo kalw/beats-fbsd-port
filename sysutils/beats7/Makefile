@@ -300,7 +300,7 @@ FILEBEAT_DESC=	Filebeat
 FILEBEAT_VARS=	GO_TARGETS+=filebeat
 
 FILEBEAT_DESC=	XpackFilebeat
-FILEBEAT_VARS=	GO_TARGETS+=xpack/filebeat
+FILEBEAT_VARS=	GO_TARGETS+=x-pack/filebeat
 
 PACKETBEAT_DESC=Packetbeat
 PACKETBEAT_VARS=GO_TARGETS+=packetbeat CGO_CFLAGS+=-I/usr/include CGO_LDFLAGS+=-L/usr/lib
@@ -309,7 +309,7 @@ METRICBEAT_DESC=Metricbeat
 METRICBEAT_VARS=GO_TARGETS+=metricbeat
 
 METRICBEAT_DESC=XpackMetricbeat
-METRICBEAT_VARS=GO_TARGETS+=xpack/metricbeat
+METRICBEAT_VARS=GO_TARGETS+=x-pack/metricbeat
 
 HEARTBEAT_DESC=	Heartbeat
 HEARTBEAT_VARS=	GO_TARGETS+=heartbeat
@@ -318,7 +318,7 @@ AUDITBEAT_DESC=	Auditbeat
 AUDITBEAT_VARS=	GO_TARGETS+=auditbeat
 
 AUDITBEAT_DESC=	XpackAuditbeat
-AUDITBEAT_VARS=	GO_TARGETS+=xpack/auditbeat
+AUDITBEAT_VARS=	GO_TARGETS+=x-pack/auditbeat
 
 .include <bsd.port.options.mk>
 
