@@ -299,26 +299,17 @@ OPTIONS_SUB=	yes
 FILEBEAT_DESC=	Filebeat
 FILEBEAT_VARS=	GO_TARGETS+=filebeat
 
-FILEBEAT_DESC=	XpackFilebeat
-FILEBEAT_VARS=	GO_TARGETS+=x-pack/filebeat
-
 PACKETBEAT_DESC=Packetbeat
 PACKETBEAT_VARS=GO_TARGETS+=packetbeat CGO_CFLAGS+=-I/usr/include CGO_LDFLAGS+=-L/usr/lib
 
 METRICBEAT_DESC=Metricbeat
 METRICBEAT_VARS=GO_TARGETS+=metricbeat
 
-METRICBEAT_DESC=XpackMetricbeat
-METRICBEAT_VARS=GO_TARGETS+=x-pack/metricbeat
-
 HEARTBEAT_DESC=	Heartbeat
 HEARTBEAT_VARS=	GO_TARGETS+=heartbeat
 
 AUDITBEAT_DESC=	Auditbeat
 AUDITBEAT_VARS=	GO_TARGETS+=auditbeat
-
-AUDITBEAT_DESC=	XpackAuditbeat
-AUDITBEAT_VARS=	GO_TARGETS+=x-pack/auditbeat
 
 .include <bsd.port.options.mk>
 
@@ -352,7 +343,7 @@ post-patch:
 do-build:
 .for GO_TARGET in ${GO_TARGETS}
 #	(cd ${GO_WRKSRC}; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${GMAKE} -C ${GO_TARGET})
-	(cd ${GO_WRKSRC}/${GO_TARGET}; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
+	(cd ${GO_WRKSRC}/x-pack/${GO_TARGET}; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
 .endfor
 
 do-install:
@@ -378,8 +369,8 @@ do-install:
 .if !empty(GO_TARGETS:M${BEATMOD})
 	${MKDIR} ${STAGEDIR}${ETCDIR}/${BEATMOD}.modules.d ${STAGEDIR}${DATADIR}/${BEATMOD}/module
 	(cd ${WRKSRC}/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
-	(cd ${WRKSRC}/xpack/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
-	(cd ${WRKSRC}/xpack/${BEATMOD}/modules.d && ${COPYTREE_SHARE} . ${STAGEDIR}${ETCDIR}/${BEATMOD}.modules.d)
+	(cd ${WRKSRC}/x-pack/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
+	(cd ${WRKSRC}/x-pack/${BEATMOD}/modules.d && ${COPYTREE_SHARE} . ${STAGEDIR}${ETCDIR}/${BEATMOD}.modules.d)
 	(cd ${WRKSRC}/${BEATMOD}/modules.d && ${COPYTREE_SHARE} . ${STAGEDIR}${ETCDIR}/${BEATMOD}.modules.d)
 .endif
 .endfor
@@ -387,7 +378,7 @@ do-install:
 .if !empty(GO_TARGETS:M${BEATMOD})
 	${MKDIR} ${STAGEDIR}${DATADIR}/${BEATMOD}/module
 	(cd ${WRKSRC}/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
-	(cd ${WRKSRC}/xpack/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
+	(cd ${WRKSRC}/x-pack/${BEATMOD}/module && ${COPYTREE_SHARE} . ${STAGEDIR}${DATADIR}/${BEATMOD}/module ${FIND_ARGS})
 .endif
 .endfor
 
