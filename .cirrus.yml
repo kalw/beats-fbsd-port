@@ -7,6 +7,14 @@ freebsd_instance:
   image_family: freebsd-11-4
 task:
   timeout_in: 120m
+  quick: |
+    pkg install -y go gmake ca_root_nss mage
+    portsnap fetch extract
+    cd ${CIRRUS_WORKING_DIR}
+    cd sysutils/beats7
+    ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
+  binaries_artifacts:
+        path: "artefacts/*/*"
   install_script: |
     ./custom_ports_01_prepare.sh
   matrix:
