@@ -17,7 +17,7 @@ $ sudo portsnap fetch extract
 $ git clone https://github.com/kalw/beats-fbsd-port.git
 
 # build and package
-$ cd beats/sysutils/beats7
+$ cd beats-fbsd-port/sysutils/beats7
 $ sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
 ```
 
