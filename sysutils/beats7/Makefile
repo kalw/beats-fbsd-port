@@ -342,13 +342,13 @@ post-patch:
 
 do-build:
 .for BEATMOD in filebeat metricbeat
-if !empty(GO_TARGETS:M${BEATMOD})
-	(cd ${GO_WRKSRC}/x-pack/${GO_TARGET} ; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
+.if !empty(GO_TARGETS:M${BEATMOD})
+	(cd ${GO_WRKSRC}/x-pack/${BEATMOD} ; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
 .endif
 .endfor
-.for GO_TARGET in heartbeat auditbeat packetbeat
-if !empty(GO_TARGETS:M${BEATMOD})
-	(cd ${GO_WRKSRC}/${GO_TARGET} ; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
+.for BEATMOD in heartbeat auditbeat packetbeat
+.if !empty(GO_TARGETS:M${BEATMOD})
+	(cd ${GO_WRKSRC}/${BEATMOD} ; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
 .endif
 .endfor
 
