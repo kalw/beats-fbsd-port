@@ -9,7 +9,7 @@ vagrant up
 vagrant ssh
 
 # install build tools
-$ sudo pkg install -y go gmake ca_root_nss
+$ sudo pkg install -y go gmake ca_root_nss mage
 
 # get ports
 $ sudo portsnap fetch extract
