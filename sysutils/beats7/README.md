@@ -9,17 +9,16 @@ vagrant up
 vagrant ssh
 
 # install build tools
-$ sudo pkg install -y go gmake ca_root_nss mage
+$ sudo pkg install -y go gmake ca_root_nss mage git
 
 # get ports
 $ sudo portsnap fetch extract
 
 # fetch the latest port version 
-$ fetch https://github.com/kalw/beats-fbsd-port/archive/master.zip
-$ unzip master.zip 
+$ git clone https://github.com/elastic/beats.git
 
 # build and package
-$ cd beats-fbsd-port*/sysutils/beats7
+$ cd beats/sysutils/beats7
 $ sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
 ```
 
