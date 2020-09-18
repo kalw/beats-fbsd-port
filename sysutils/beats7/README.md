@@ -3,8 +3,7 @@
 ## Quick way
 ```
 # get the box version you aim to build 
-vagrant init freebsd/FreeBSD-11.4-RELEASE \
-  --box-version 2018.06.22
+vagrant init freebsd/FreeBSD-11.4-RELEASE 
 vagrant up
 vagrant ssh
 
