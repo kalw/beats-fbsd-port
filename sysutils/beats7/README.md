@@ -3,7 +3,7 @@
 ## Quick way
 ```
 # get the box version you aim to build 
-vagrant init freebsd/FreeBSD-11.4-RELEASE 
+vagrant init freebsd/FreeBSD-11.4-STABLE
 vagrant up
 vagrant ssh
 
@@ -14,7 +14,7 @@ $ sudo pkg install -y go gmake ca_root_nss mage git
 $ sudo portsnap fetch extract
 
 # fetch the latest port version 
-$ git clone https://github.com/elastic/beats.git
+$ git clone https://github.com/kalw/beats-fbsd-port.git
 
 # build and package
 $ cd beats/sysutils/beats7
@@ -24,7 +24,7 @@ $ sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
 ## Proper way
 ```
 # Get the box version you aim to build 
-vagrant init freebsd/FreeBSD-11.3-STABLE
+vagrant init freebsd/FreeBSD-11.4-STABLE
 vagrant up
 vagrant ssh
 
