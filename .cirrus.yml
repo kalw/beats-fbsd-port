@@ -13,9 +13,10 @@ quick_task:
     cd ${CIRRUS_WORKING_DIR}
     cd sysutils/beats7
     ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
-  quick_artifacts:
+  quick_binaries_artifacts:
         path: "sysutils/beats7/work/pkg/*"
 full_task:
+  only_if: $CIRRUS_BRANCH == 'master'
   freebsd_instance:
     image_family: freebsd-11-4
   install_script: |
