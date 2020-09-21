@@ -1,9 +1,9 @@
 # $FreeBSD$
 
-PORTEPOCH=	2020091601
 PORTNAME=	beats
 PORTVERSION=	7.9.1
 DISTVERSIONPREFIX=v
+PORTEPOCH=	2020092101
 CATEGORIES=	sysutils
 PKGNAMESUFFIX?=	7
 
@@ -341,12 +341,12 @@ post-patch:
 	${REINPLACE_CMD} -e "s|%%BEATSVERSION%%|v${PORTVERSION}|g" ${WRKSRC}/dev-tools/mage/settings.go
 
 do-build:
-.for BEATMOD in filebeat metricbeat
+.for BEATMOD in filebeat metricbeat auditbeat
 .if !empty(GO_TARGETS:M${BEATMOD})
 	(cd ${GO_WRKSRC}/x-pack/${BEATMOD} ; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
 .endif
 .endfor
-.for BEATMOD in heartbeat auditbeat packetbeat
+.for BEATMOD in packetbeat heartbeat
 .if !empty(GO_TARGETS:M${BEATMOD})
 	(cd ${GO_WRKSRC}/${BEATMOD} ; ${SETENV} ${MAKE_ENV} ${GO_ENV} ${LOCALBASE}/bin/mage build)
 .endif
@@ -354,7 +354,32 @@ do-build:
 
 do-install:
 	${MKDIR} ${STAGEDIR}${ETCDIR}
-.for BEATMOD in ${GO_TARGETS}
+.for BEATMOD in filebeat metricbeat auditbeat
+.if !empty(GO_TARGETS:M${BEATMOD})
+	${MKDIR} ${STAGEDIR}/var/db/beats/${BEATMOD}
+	${INSTALL_PROGRAM} ${GO_WRKSRC}/x-pack/${BEATMOD}/${BEATMOD} \
+		${STAGEDIR}${PREFIX}/sbin
+	${INSTALL_DATA} ${WRKSRC}/x-pack/${BEATMOD}/${BEATMOD}.yml \
+		${STAGEDIR}${ETCDIR}/${BEATMOD}.yml.sample
+	${INSTALL_DATA} ${WRKSRC}/x-pack/${BEATMOD}/${BEATMOD}.reference.yml \
+		${STAGEDIR}${ETCDIR}/${BEATMOD}.yml.reference
+	(KIBANA_PATH=${STAGEDIR}${DATADIR}/${BEATMOD}/kibana; \
+		${MKDIR} $${KIBANA_PATH}; \
+		DASHBOARD_FIND_ARGS="-path */_meta/kibana -type d"; \
+		DASHBOARD_PATHS=$$(${SETENV} ${FIND} ${WRKSRC}/x-pack/${BEATMOD} $${DASHBOARD_FIND_ARGS}); \
+		for DASHBOARD_PATH in $${DASHBOARD_PATHS}; \
+		do \
+			(cd $${DASHBOARD_PATH} && ${COPYTREE_SHARE} . $${KIBANA_PATH}); \
+		done;\
+		DASHBOARD_PATHS=$$(${SETENV} ${FIND} ${WRKSRC}/${BEATMOD} $${DASHBOARD_FIND_ARGS}); \
+		for DASHBOARD_PATH in $${DASHBOARD_PATHS}; \
+		do \
+			(cd $${DASHBOARD_PATH} && ${COPYTREE_SHARE} . $${KIBANA_PATH}); \
+		done)
+.endif
+.endfor
+.for BEATMOD in packetbeat heartbeat
+.if !empty(GO_TARGETS:M${BEATMOD})
 	${MKDIR} ${STAGEDIR}/var/db/beats/${BEATMOD}
 	${INSTALL_PROGRAM} ${GO_WRKSRC}/${BEATMOD}/${BEATMOD} \
 		${STAGEDIR}${PREFIX}/sbin
@@ -370,6 +395,7 @@ do-install:
 		do \
 			(cd $${DASHBOARD_PATH} && ${COPYTREE_SHARE} . $${KIBANA_PATH}); \
 		done)
+.endif
 .endfor
 .for BEATMOD in filebeat metricbeat
 .if !empty(GO_TARGETS:M${BEATMOD})
