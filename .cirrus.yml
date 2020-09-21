@@ -5,7 +5,7 @@ release_script_template: &RELEASE_SCRIPT_TEMPLATE
     ./custom_ports_04_release_github.sh
 freebsd_instance:
   image_family: freebsd-11-4
-task:
+quick_task:
   timeout_in: 120m
   quick_script: |
     pkg install -y go gmake ca_root_nss mage
@@ -15,6 +15,7 @@ task:
     ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
   quick_artifacts:
         path: "sysutils/beats7/work/pkg/*"
+full_task:
   install_script: |
     ./custom_ports_01_prepare.sh
   matrix:
