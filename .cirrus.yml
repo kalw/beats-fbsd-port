@@ -6,7 +6,7 @@ release_script_template: &RELEASE_SCRIPT_TEMPLATE
 quick_task: 
   build_script: |
     pkg install -y go gmake ca_root_nss mage
-    PORTSNAP_FLAGS="--interactive" portsnap fetch extract
+    portsnap fetch extract --interactive
     cd ${CIRRUS_WORKING_DIR}
     cd sysutils/beats7
     ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
