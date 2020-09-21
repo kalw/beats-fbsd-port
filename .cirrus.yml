@@ -3,18 +3,18 @@ release_script_template: &RELEASE_SCRIPT_TEMPLATE
     GITHUB_TOKEN: ENCRYPTED[f405516960bcf692dc7d4d3f46df621cfb1a0f2aec27c453bc83d839ff11192f9d79e35ca4e516780a3c0ad752e3c8c5]
   script: |
     ./custom_ports_04_release_github.sh
-quick_task:
-  freebsd_instance:
-    image_family: freebsd-11-4
-  timeout_in: 120m
-  quick_script: |
+quick_task: |
     pkg install -y go gmake ca_root_nss mage
     portsnap fetch extract
     cd ${CIRRUS_WORKING_DIR}
     cd sysutils/beats7
     ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
+  freebsd_instance:
+    image_family: freebsd-11-4
+  timeout_in: 120m
+  quick_script: 
   quick_binaries_artifacts:
-        path: "sysutils/beats7/work/pkg/*"
+    path: "sysutils/beats7/work/pkg/*"
 full_task:
   only_if: $CIRRUS_BRANCH == 'master'
   freebsd_instance:
