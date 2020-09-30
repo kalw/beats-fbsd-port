@@ -1,4 +1,3 @@
-/you/have/to/check/what/makeplist/gives/you
 %%ETCDIR%%/filebeat.modules.d/activemq.yml.disabled
 %%ETCDIR%%/filebeat.modules.d/apache.yml.disabled
 %%ETCDIR%%/filebeat.modules.d/auditd.yml.disabled
