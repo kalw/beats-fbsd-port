@@ -1,4 +1,4 @@
-# beats-fbsd-port [![Build Status](https://api.cirrus-ci.com/github/kalw/beats-fbsd-port.svg)](https://cirrus-ci.com/github/kalw/beats-fbsd-port)
+# fbsd-ports [![Build Status](https://api.cirrus-ci.com/github/kalw/fbsd-ports.svg)](https://cirrus-ci.com/github/kalw/fbsd-ports)
 
 ## Quick way
 ```
@@ -15,11 +15,11 @@ $ sudo pkg install -y go gmake ca_root_nss
 $ sudo portsnap fetch extract
 
 # fetch the latest port version 
-$ fetch https://github.com/kalw/beats-fbsd-port/archive/master.zip
+$ fetch https://github.com/kalw/fbsd-ports/archive/master.zip
 $ unzip master.zip 
 
 # build and package
-$ cd beats-fbsd-port*/sysutils/beats7
+$ cd fbsd-ports*/sysutils/beats7
 $ sudo ALLOW_UNSUPPORTED_SYSTEM=yes BATCH=yes make package
 ```
 
@@ -31,7 +31,7 @@ vagrant up
 vagrant ssh
 
 # Install build tools
-sudo pkg install -y go gmake ca_root_nss portshaker poudriere bash sudo git
+sudo pkg install -y gmake ca_root_nss portshaker poudriere bash sudo git
 
 # Config poudriere
 sudo bash -c 'cat > /usr/local/etc/poudriere.conf <<EOF
@@ -72,12 +72,12 @@ poudriere_ports_mountpoint="/usr/local/poudriere/ports"
 default_poudriere_tree="default"
 default_merge_from="freebsd beat7"
 EOF'
-sudo bash -c 'cat > /usr/local/etc/portshaker.d/beat7 <<"EOF"
+sudo bash -c 'cat > /usr/local/etc/portshaker.d/fbsd-ports <<"EOF"
 #!/bin/sh
 shift
 . /usr/local/share/portshaker/portshaker.subr
 method="git"
-git_clone_uri="https://github.com/kalw/beats-fbsd-port.git"
+git_clone_uri="https://github.com/kalw/fbsd-ports.git"
 git_branch="master"
 run_portshaker_command $*
 EOF'
@@ -90,7 +90,7 @@ run_portshaker_command $*
 EOF'
 
 # Merge port trees
-sudo bash -c 'chmod +x /usr/local/etc/portshaker.d/{beat7,freebsd}'
+sudo bash -c 'chmod +x /usr/local/etc/portshaker.d/{fbsd-ports,freebsd}'
 sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -U'
 sudo bash -c 'PORTSNAP_FLAGS="--interactive" portshaker -M'
 sudo mkdir -p /usr/ports/distfiles

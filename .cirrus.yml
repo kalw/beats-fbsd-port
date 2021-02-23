@@ -16,14 +16,14 @@ task:
         ./custom_ports_03_build.sh
       binaries_artifacts:
         path: "artefacts/*/*"
-    - name: 11.3-RELEASE
+    - name: 11.4-RELEASE
       build_script: |
         echo ${CIRRUS_TASK_NAME}
         ./custom_ports_03_build.sh
       binaries_artifacts:
         path: "artefacts/*/*"
       << : *RELEASE_SCRIPT_TEMPLATE
-    - name: 12.1-RELEASE
+    - name: 12.2-RELEASE
       build_script: |
         echo ${CIRRUS_TASK_NAME}
         ./custom_ports_03_build.sh
