@@ -6,6 +6,7 @@
 # $FreeBSD$
 #
 
+PORTEPOCH=	2021022401
 PORTNAME= duo-openvpn
 PORTVERSION=    2.4
 CATEGORIES=    security
