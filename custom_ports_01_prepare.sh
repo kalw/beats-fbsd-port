@@ -34,7 +34,7 @@ sudo bash -c 'cat > /usr/local/etc/portshaker.d/custom <<"EOF"
 shift
 . /usr/local/share/portshaker/portshaker.subr
 method="git"
-git_clone_uri="https://github.com/kalw/beats-fbsd-port.git"
+git_clone_uri="https://github.com/kalw/fbsd-ports.git"
 git_branch="master"
 run_portshaker_command $*
 EOF'
