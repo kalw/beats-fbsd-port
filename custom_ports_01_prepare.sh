@@ -29,13 +29,13 @@ poudriere_ports_mountpoint="/usr/local/poudriere/ports"
 default_poudriere_tree="default"
 default_merge_from="freebsd custom"
 EOF'
-sudo bash -c 'cat > /usr/local/etc/portshaker.d/custom <<"EOF"
+sudo bash -c 'cat > /usr/local/etc/portshaker.d/custom <<EOF
 #!/bin/sh
 shift
 . /usr/local/share/portshaker/portshaker.subr
 method="git"
 git_clone_uri="https://github.com/kalw/fbsd-ports.git"
-git_branch="master"
+git_branch="${CIRRUS_BRANCH:-'master'}"
 run_portshaker_command $*
 EOF'
 sudo bash -c 'cat > /usr/local/etc/portshaker.d/freebsd <<"EOF"
